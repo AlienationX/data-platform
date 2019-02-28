@@ -2,8 +2,5 @@
 .idea/*
 *.pyc
 
-# 忽略配置文件
-config.py
-
 # log文件
 log/
