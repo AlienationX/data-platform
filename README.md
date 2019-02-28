@@ -1,3 +1,4 @@
-# data-platform-ego
+# ego
 
+**data-platform**
 kylin + flask + bootstrap + vue
