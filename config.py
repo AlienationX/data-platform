@@ -31,7 +31,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_BINDS = {
         # "impala": "impala://10.15.1.49:25003/default",  # 有很多元数据刷新和缓存的问题，不建议使用
         "kylin": "kylin://ADMIN:KYLIN@10.15.1.49:7070/learn_kylin?version=v1",
-        "xiaonuan": "mysql+pymysql://work:phkAmwrF@10.15.1.14:3306/xiaonuan?charset=utf8"
+        "xiaonuan": "mysql+pymysql://root:root123@10.15.1.1:3306/xiaonuan?charset=utf8"
     }
     # 查询时会显示原始SQL语句
     SQLALCHEMY_ECHO = False
