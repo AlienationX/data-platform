@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>bootstrap-tagsinput</title>
+    <link href="http://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet">
+    <style>
+        .box {
+            width: 500px;
+            margin: auto;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+        .tagsinput-primary {
+            margin-bottom: 18px;
+        }
+        .tagsinput-primary .bootstrap-tagsinput {
+            border-color: #1abc9c;
+            margin-bottom: 0;
+        }
+        /*.btn {*/
+            /*background: #1abc9c;*/
+            /*border: 0;*/
+            /*color: #fff;*/
+            /*padding: 10px;*/
+            /*border-radius: 5px;*/
+            /*margin-top: 10px;*/
+        /*}*/
+        .bootstrap-tagsinput{
+            width: 100%;
+        }
+        .bootstrap-tagsinput .label-info {
+            border-radius: 4px;
+            background-color: #1abc9c;
+            color: #fff;
+            font-size: 13px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            vertical-align: middle;
+            overflow: hidden;
+            margin: 0 5px 5px 0;
+            padding: 6px 10px 6px 14px;
+            transition: .25s linear;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <h1 style="text-align: center;margin: 20px 0;margin-top: 200px;">bootstrap-tagsinput</h1>
+    <div>
+        <input name="tagsinput" id="tagsinputval" data-role="tagsinput" value="这是一个标签,jquery" placeholder="输入后回车" />
+        <button class="btn" onclick="getinput()">获取输入的值</button>
+        <button class="btn" onclick="setinput()">赋值</button>
+    </div>
+    <div class="tab-pane" id="TabCareerInfo" name="Career History">
+    <div class="row">
+        <div class="col-md-1">
+        <div class="col-md-11">
+            <label for="txtSkills">test</label>
+            <input type="text" class="form-control" id="txtSkills" name = "Skills" data-role="tagsinput">
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/3.1.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+<script type="text/javascript">
+    //获取值
+    function getinput(){
+        alert($('#tagsinputval').val());
+    }
+
+    //赋值
+    function setinput(){
+        $("#tagsinputval").tagsinput('add','aaa,bbb,ccc,ddd');
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# 忽略python编译文件pyc
+.idea/*
+*.pyc
+
+# log文件
+log/

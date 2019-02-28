@@ -1,0 +1,729 @@
+{% extends 'base_header.html' %}
+
+{% block title %}Analysis{% endblock %}
+
+{% block js %}
+<script src="../static/lib/bootstrap-3.3.7-dist/js/bootstrap-tagsinput.min.js"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="../static/lib/bootstrap-3.3.7-dist/css/bootstrap-tagsinput.css">
+{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid app-page-header">
+    <div class="row app-row-padding">
+        <!-- Extra small button group -->
+        <!--<div class="input-sm col-sm-1">-->
+        <!--<select class="form-group-sm">-->
+        <!--<option class="input-sm">-->
+        <!--金额分析-->
+        <!--</option>-->
+        <!--<option>-->
+        <!--销售分析-->
+        <!--</option>-->
+        <!--<option>-->
+        <!--宠物分析-->
+        <!--</option>-->
+        <!--<option>-->
+        <!--客户分析-->
+        <!--</option>-->
+        <!--<option>-->
+        <!--病例分析-->
+        <!--</option>-->
+        <!--</select>-->
+        <!--</div>-->
+
+        <div class="btn-group">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                金额分析 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">
+                    <small>金额分析</small>
+                </a></li>
+                <li><a href="#">
+                    <small>销售分析</small>
+                </a></li>
+                <li><a href="#">
+                    <small>宠物分析</small>
+                </a></li>
+                <li><a href="#">
+                    <small>客户分析</small>
+                </a></li>
+                <li><a href="#">
+                    <small>病例分析</small>
+                </a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </div>
+
+        <button class="btn btn-default btn-sm pull-right" type="button" style="outline:none;"><i class="fa fa-folder-open text-primary pull-right" aria-hidden="true"></i></button>
+        <!--<div class="pull-right"><span class="icon-edit"></span></div>-->
+    </div>
+</div>
+
+
+<div class="row app-padding0">
+    <div class="col-md-3 app-left" id="cube">
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item">维度
+                    <ul v-for="dim_group in dim_bak" class="list-group">{{ dim_group.key }}
+                        <li v-for="dim in dim_group.value" class="list-group-item">
+                            <div v-on:click="toggle(dim)" style="cursor:pointer">
+                                <input type="checkbox"
+                                       v-bind:checked="dim.done">
+                                <del v-if="dim.done" class="small">
+                                    {{ dim.text }}
+                                </del>
+                                <span v-else class="small">
+                                    {{ dim.text }}
+                                </span>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-group-item">指标
+                    <ol class="list-group">
+                        <li v-for="fact in fact_bak" class="list-group-item small row">
+                            <!--v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)"-->
+                            <div v-on:click="toggle(fact)" style="cursor:pointer">
+                                <input type="checkbox"
+                                       v-bind:checked="fact.done">
+                                <del v-if="fact.done" class="small">
+                                    {{ fact.text }}
+                                </del>
+                                <span v-else class="small">
+                                    {{ fact.text }}
+                                </span>
+                            </div>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
+        </div>
+
+
+        <br>
+        <div class="row app-cube-padding">
+            <div class="pull-right">
+                <a tabindex="0" class="btn btn-small" style="outline:none;" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?"><span class="glyphicon glyphicon-info-sign text-right" aria-hidden="true"></span></a>
+            </div>
+            <!--<div class="pull-right"><span class="glyphicon glyphicon-data-sign text-right" aria-hidden="true"></span></div>-->
+            <h5 class="app-font app-row-margin">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseDim" aria-expanded="true" aria-controls="collapseOne">
+                    维度<span class=" icon-double-angle-down" aria-hidden="true"></span>
+                </a>
+            </h5>
+        </div>
+
+        <div id="collapseDim" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li v-for="dim in dims" class="list-group-item">
+                        <label>
+                            <input type="checkbox"
+                                   v-on:change="toggle(dim)"
+                                   v-bind:checked="dim.done">
+                            <del v-if="dim.done">
+                                <small>{{ dim.text }}</small>
+                            </del>
+                            <span v-else>
+                                <small>{{ dim.text }}</small>
+                            </span>
+                        </label>
+
+                        <span class="glyphicon glyphicon-th-list small" style="color: #6f5499"></span>
+                        <span class="glyphicon glyphicon-filter small text-danger"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt small text-danger"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <h5 class="app-font app-row-margin">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFact" aria-expanded="true" aria-controls="collapseOne">
+                <span class="glyphicon glyphicon-info-sign"></span>指标<span class="icon-double-angle-down" aria-hidden="true"></span>
+            </a>
+        </h5>
+        <div id="collapseFact" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <ol>
+                    <li v-for="fact in facts" class="small">
+                        <label>
+                            <input type="checkbox"
+                                   v-on:change="toggle(fact)"
+                                   v-bind:checked="fact.done">
+                            <del v-if="fact.done">
+                                <small>{{ fact.text }}</small>
+                            </del>
+                            <span v-else>
+                                <small>{{ fact.text }}</small>
+                            </span>
+                        </label>
+                        <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default" style="border: none"><span class="glyphicon glyphicon-filter small text-danger"></span></button>
+                            <button type="button" class="btn btn-default" style="border: none"><span class="glyphicon glyphicon-sort-by-attributes-alt small text-danger"></span></button>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="col-md-9 app-right">
+        <div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                    <small>行列</small>
+                </a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                    <small>筛选器</small>
+                </a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+                    <small>过滤器</small>
+                </a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">
+                    <small>排序</small>
+                </a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <br>
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-1 control-label" for="selectedDim">行</label>
+                            <div class="col-md-11">
+                                <div class="input-group">
+                                    <input id="selectedDim" name="tagsinputDim" class="form-control">
+                                    <span class="input-group-btn ">
+                                        <button class="btn btn-default" type="button">Go!</button>
+                                    </span>
+                                </div>
+
+                                <!--<div class="form-control">-->
+                                <!--<input =name="tagsinput" id="tagsinputval" data-role="tagsinput" value="这是一个标签,jquery" placeholder="输入后回车"/>-->
+                                <!--<button type="button" onclick="getinput()">获取输入的值</button>-->
+                                <!--<button type="button" onclick="setinput()">赋值</button>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label class="col-md-1 control-label" for="selectedFact">列</label>
+                            <div class="col-md-11">
+                                <input id="selectedFact" name="tagsinputFact" type="text" class="form-control">
+                                <a class="btn btn-small close form-control-feedback"><span aria-hidden="true">&times;</span></a>
+                                <!--<span role="button" class="glyphicon glyphicon-remove form-control-feedback" onclick="setinput(); return false;"></span>-->
+                                <!--<input type="text" class="form-control">-->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                <div role="tabpanel" class="tab-pane" id="messages">Filter</div>
+                <div role="tabpanel" class="tab-pane" id="settings">Rank</div>
+            </div>
+        </div>
+
+        <div class="alert alert-danger alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error Messagge</strong>
+        </div>
+        <!--<div>-->
+        <!--<h4 class="text-center">Add A Title...</h4>-->
+        <!--<p class="pull-right smaller">add a description...</p>-->
+        <!--</div>-->
+        <br>
+        <div id="table">
+            <div v-if="errored">
+                <p>errored...</p>
+            </div>
+            <div v-else>
+                <div v-if="loading">
+                    <p>Loading...</p>
+                </div>
+                <div v-else>
+                    <p>Load End</p>
+                    <p>{{ info.title }}</p>
+                    <div class="table-responsive">
+                        <table id="dataTable" class="display" style="width: 100%">
+                            <thead class="display">
+                            <tr>
+                                <th v-for="column in info.columns" :key="column">{{ column }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="index in info.index">
+                                <td v-for="data in info.data[index]" :key="index">
+                                    {{ data }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="jsGrid"></div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <i class="fa fa-download text-primary pull-right btn min-btn" onmouseover="this.style.backgroundColor='#6f5499'" onmouseout="this.style.backgroundColor='';" onclick="setinput()"></i>
+            <i class="fa fa-bar-chart text-primary pull-right " aria-hidden="true"></i>
+        </div>
+        <div id="example1"></div>
+        <div id="app">
+            <h1>Bitcoin Price Index</h1>
+            <section v-if="errored">
+                <p>We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+            </section>
+            <section v-else>
+                <div v-if="loading">Loading...</div>
+                <div
+                        v-else
+                        v-for="currency in info"
+                        class="currency"
+                >
+                    {{ currency.description }}:
+                    <span class="lighten"><span v-html="currency.symbol"></span>{{ currency.rate_float | currencydecimal }}</span>
+                </div>
+            </section>
+        </div>
+        <br>
+        <com-demo1></com-demo1>
+    </div>
+</div>
+
+
+<!-- vue -->
+<script>
+    $('document').ready(function () {
+        // $('#factColumns').mouseenter(function () {
+        //     $('#factColumns').append('' +
+        //         '<span class="app-icon-size glyphicon glyphicon-list"></span>' +
+        //         '<span class="glyphicon glyphicon-filter app-icon-size"></span>' +
+        //         '<span class="glyphicon glyphicon-sort-by-attributes-alt app-icon-size"></span>' +
+        //         '');
+        // }).mouseleave(function () {
+        //     $('span#factColumns').remove();
+        // });
+
+        $("[data-toggle='popover']").popover();
+
+        $('#dataTable').DataTable({
+            "paging": false,
+            "ordering": false,
+            "info": false
+        });
+    });
+
+    function sleep(sec) {
+        numberMillis = sec * 1000;
+        var now = new Date();
+        var exitTime = now.getTime() + numberMillis;
+        while (true) {
+            now = new Date();
+            if (now.getTime() > exitTime)
+                return;
+        }
+    }
+
+
+    //获取值
+    function getinput() {
+        alert($('#selectedFact').val());
+    }
+
+    //赋值
+    function setinput() {
+        var elt = $('#selectedFact');
+        elt.tagsinput({
+            tagClass: "label label-primary",
+            itemValue: 'value',
+            itemText: 'text',
+            // focusClass: "",
+            confirmKeys: [13, 188],
+            typeahead: {
+                // name: 'cities',
+                // displayKey: 'text',
+                source: {
+                    source: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo'],
+                    freeInput: true
+                }
+            }
+        });
+        elt.tagsinput('add', {"value": 1, "text": "Amsterdam", "continent": "Europe"});
+        elt.tagsinput('add', {"value": 4, "text": "Washington", "continent": "America"});
+        elt.tagsinput('add', {"value": 7, "text": "Sydney", "continent": "Australia"});
+        elt.tagsinput('add', {"value": 13, "text": "Cairo", "continent": "Africa"});
+        // elt.tagsinput('add', 'aaa,bbb,ccc,ddd');
+        // elt.tagsinput('focus');
+        console.log("tagsinput success");
+        // event.stopPropagation();  // 禁止冒泡
+    }
+
+    function tag_search() {
+        console.log("tag_search");
+    }
+
+    function delete_tag() {
+        console.log("delete_tag");
+        //阻止冒泡上层click
+        event.stopPropagation();
+    }
+
+    // $("#selectedDim").tagsinput('add','aaa,bbb,ccc,ddd');
+    // var elt = $('#selectedDim');
+    // elt.tagsinput({
+    //     tagClass: "label label-primary",
+    //     // itemValue: 'value',
+    //     // itemText: 'text',
+    //     confirmKeys: [13, 188],
+    //     typeahead: {
+    //         // name: 'cities',
+    //         // displayKey: 'text',
+    //         source: {
+    //             source: ['Amsterdam', 'Washington', 'Sydney', 'Beijing', 'Cairo'],
+    //             freeInput: true
+    //         }
+    //     }
+    // });
+    // elt.tagsinput('add', {"value": 1, "text": "Amsterdam", "continent": "Europe"});
+    // elt.tagsinput('add', {"value": 4, "text": "Washington", "continent": "America"});
+    // elt.tagsinput('add', {"value": 7, "text": "Sydney", "continent": "Australia"});
+    // elt.tagsinput('add', {"value": 13, "text": "Cairo", "continent": "Africa"});
+
+    function addTag(tag) {
+        let factTag = $('#selectedFact');
+        factTag.tagsinput({
+            tagClass: "label label-primary",
+        });
+        // elt.tagsinput('add', {"value": 1, "text": "Amsterdam", "continent": "Europe"});
+        // elt.tagsinput('add', {"value": 4, "text": "Washington", "continent": "America"});
+        // elt.tagsinput('add', {"value": 7, "text": "Sydney", "continent": "Australia"});
+        // elt.tagsinput('add', {"value": 13, "text": "Cairo", "continent": "Africa"});
+        factTag.tagsinput('add', tag);
+        console.log("add " + tag + " tag");
+    }
+
+    function removeTag(tag) {
+        let factTag = $('#selectedFact');
+        factTag.tagsinput({
+            tagClass: "label label-primary",
+        });
+        factTag.tagsinput('remove', tag);
+        // console.log(factTag.val());
+        console.log(factTag.tagsinput('items'));
+        console.log("remove " + tag + " tag");
+    }
+
+    var cube = new Vue({
+        el: "#cube",
+        data: {
+            dims: [
+                {text: "Learn JavaScript", done: false},
+                {text: "Learn Vue", done: false},
+                {text: "Play around in JSFiddle", done: true},
+                {text: "Build something awesome", done: true}
+            ],
+            facts: [
+                {text: "全责发生制流水", done: false},
+                {text: "现金", done: false},
+                {text: "POS", done: false},
+                {text: "团购", done: true},
+                {text: "记账", done: true},
+                {text: "会员卡充值", done: true},
+                {text: "会员卡消费", done: true},
+                {text: "押金充值", done: true},
+                {text: "押金消费", done: true},
+                {text: "账户充值", done: true},
+                {text: "账户消费", done: true},
+            ],
+            dim_bak: [
+                {
+                    "key": "日期",
+                    "value": [
+                        {text: "年", done: false},
+                        {text: "月", done: false},
+                        {text: "周", done: false},
+                        {text: "日", done: false},
+                    ]
+                },
+                {
+                    "key": "医院",
+                    "value": [
+                        {text: "大区", done: false},
+                        {text: "区域", done: false},
+                        {text: "省份", done: false},
+                        {text: "城市", done: false},
+                        {text: "系统", done: false},
+                    ]
+                },
+                {
+                    "key": "客户",
+                    "value": [
+                        {text: "客户来源", done: false},
+                        {text: "是否散客", done: false},
+                        {text: "是否启用", done: false},
+                    ]
+                }
+            ],
+            fact_bak: [
+                {text: "全责发生制流水", done: false},
+                {text: "现金", done: false},
+                {text: "POS", done: false},
+                {text: "团购", done: false},
+                {text: "记账", done: false},
+                {text: "会员卡充值", done: false},
+                {text: "会员卡消费", done: false},
+                {text: "押金充值", done: false},
+                {text: "押金消费", done: false},
+                {text: "账户充值", done: false},
+                {text: "账户消费", done: false}
+            ]
+        },
+        methods: {
+            toggle: function (selected) {
+                selected.done = !selected.done;
+                if (selected.done) {
+                    console.log("select " + selected.text);
+                    addTag(selected.text);
+                } else {
+                    console.log("unselect " + selected.text);
+                    removeTag(selected.text);
+                }
+
+            }
+        },
+        mounted() {
+            // example1
+            axios
+            // .get('/api/analysis/cube/table?subject=fact_sale')
+                .get('/api/analysis/cube/subject', {
+                    params: {
+                        subject: "fact_sale"
+                    }
+                })
+                .then(response => {
+                    this.info = response.data.result;
+                    console.log(response);
+                    console.log(this.info);
+                    console.log("get success");
+                    $('#dataTable').DataTable();
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => this.loading = false);
+
+            // example2 这中写法不能实时更新数据
+            // axios
+            // // .get('/api/analysis/cube/subject?subject=fact_sale')
+            //     .get('/api/analysis/cube/table', {
+            //         params: {
+            //             col: "test"
+            //         }
+            //     })
+            //     .then(function (response) {
+            //         this.data = response.data.result;
+            //         console.log(response);
+            //         console.log(this.data);
+            //         console.log("get success");
+            //     })
+            //     .catch(function (error) {
+            //         console.log(error);
+            //         this.errored = true;
+            //         console.log("get failed");
+            //     })
+            //     .finally(function () {
+            //         this.loading = false;
+            //         console.log("change loading to false")
+            //     })
+        }
+    });
+
+
+    var clients = [
+        {"Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false},
+        {"Name": "Connor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true},
+        {"Name": "Lacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false},
+        {"Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true},
+        {"Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false}
+    ];
+
+    var countries = [
+        {Name: "", Id: 0},
+        {Name: "United States", Id: 1},
+        {Name: "Canada", Id: 2},
+        {Name: "United Kingdom", Id: 3}
+    ];
+
+    var table = new Vue({
+        el: '#table',
+        data: function () {
+            return {
+                info: null,
+                loading: true,
+                errored: false
+            }
+        },
+        watch: {
+            // 如果 `loading` 发生改变，这个函数就会运行
+            loading: function () {
+                this.$nextTick(function () {
+                    $('#dataTable').DataTable();
+
+                    // $('#jsGrid').jsGrid({
+                    //     width: "auto",
+                    //     height: "400px",
+                    //     pageButtonCount: 7,
+                    //     loadMessage: "Please, wait...",
+                    //
+                    //     // inserting: true,
+                    //     editing: true,
+                    //     sorting: true,
+                    //     paging: true,
+                    //
+                    //     data: this.info.jsgrid_data,
+                    //
+                    //     fields: this.info.jsgrid_fields
+                    // })
+                })
+            }
+        },
+        // filters: {
+        //     currencydecimal(value) {
+        //         return value.toFixed(2)
+        //     }
+        // },
+        mounted() {
+            // example1
+            axios
+            // .get('/api/analysis/cube/table?subject=fact_sale')
+                .get('/api/analysis/cube/table', {
+                    params: {
+                        col: "test"
+                    }
+                })
+                .then(response => {
+                    this.info = response.data.result;
+                    console.log(response);
+                    console.log(this.info);
+                    console.log("get success");
+                    $('#dataTable').DataTable();
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => this.loading = false);
+
+            // example2 这中写法不能实时更新数据
+            // axios
+            // // .get('/api/analysis/cube/subject?subject=fact_sale')
+            //     .get('/api/analysis/cube/table', {
+            //         params: {
+            //             col: "test"
+            //         }
+            //     })
+            //     .then(function (response) {
+            //         this.data = response.data.result;
+            //         console.log(response);
+            //         console.log(this.data);
+            //         console.log("get success");
+            //     })
+            //     .catch(function (error) {
+            //         console.log(error);
+            //         this.errored = true;
+            //         console.log("get failed");
+            //     })
+            //     .finally(function () {
+            //         this.loading = false;
+            //         console.log("change loading to false")
+            //     })
+        }
+    });
+
+    Vue.component("com-demo1", {
+        data: function () {
+            return {
+                name: "",
+                age: "",
+                city: ""
+            }
+        },
+        template: "<ul><li id='name'>{{name}}</li><li>{{age}}</li><li>{{city}}</li></ul>",
+        created: function () {
+            this.name = "唐浩益";
+            this.age = "12";
+            this.city = "杭州";
+            var x = document.getElementById("name");//第一个命令台错误
+            console.log(x.innerHTML);
+        },
+        mounted: function () {
+            var x = document.getElementById("name");//第二个命令台输出的结果
+            console.log(x.innerHTML);
+        }
+    });
+
+    var vm = new Vue({
+        el: "#example1"
+    });
+
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                data: null,
+                loading: true,
+                errored: false
+            }
+        },
+        filters: {
+            currencydecimal(value) {
+                return value.toFixed(2)
+            }
+        },
+        mounted() {
+            axios
+                .get('https://api.coindesk.com/v1/bpi/currentprice.json')
+                .then(response => {
+                    this.info = response.data.bpi;
+                    sleep(2);
+                    console.log("test end")
+                })
+                .catch(error => {
+                    console.log(error);
+                    this.errored = true;
+                })
+                .finally(() => this.loading = false)
+        }
+    })
+</script>
+
+<!-- css -->
+<style>
+    .bootstrap-tagsinput {
+        width: 100%;
+    }
+
+    .min-btn {
+        padding: 0;
+        margin: 0;
+    }
+
+    del {
+        color: rgba(0, 0, 0, 0.3);
+    }
+
+    tr {
+        font-size: 5px;
+    }
+</style>
+{% endblock %}

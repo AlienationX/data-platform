@@ -1,0 +1,379 @@
+{% extends 'base.html' %}
+
+{% block title %}Analysis{% endblock %}
+
+{% block js %}
+    <script src="/static/bootstrap-3.3.7-dist/js/bootstrap-tagsinput.min.js"></script>
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/bootstrap-3.3.7-dist/css/bootstrap-tagsinput.css">
+{% endblock %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div class="container-fluid app-page-header">
+
+    <div class="row app-row-padding">
+        <!-- Extra small button group -->
+        <div class="btn-group">
+            <button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                金额分析 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">
+                    <small>金额分析</small>
+                </a></li>
+                <li><a href="#">
+                    <small>销售分析</small>
+                </a></li>
+                <li><a href="#">
+                    <small>宠物分析</small>
+                </a></li>
+                <li><a href="#">
+                    <small>客户分析</small>
+                </a></li>
+                <li><a href="#">
+                    <small>病例分析</small>
+                </a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+            </ul>
+        </div>
+        <div class="pull-right"><span class="icon-folder-open"></span></div>
+        <!--<div class="pull-right"><span class="icon-edit"></span></div>-->
+    </div>
+</div>
+
+
+<div class="row app-padding0" id="app">
+    <div class="col-md-3 app-left">
+        <br>
+        <div class="row app-cube-padding">
+            <div class="pull-right">
+                <a tabindex="0" class="btn btn-small " role="label" style="outline:none;" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?"><span class="glyphicon glyphicon-info-sign text-right" aria-hidden="true"></span></a>
+            </div>
+            <!--<div class="pull-right"><span class="glyphicon glyphicon-data-sign text-right" aria-hidden="true"></span></div>-->
+            <h5 class="app-font app-row-margin">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseDim" aria-expanded="true" aria-controls="collapseOne">
+                    维度<span class=" icon-double-angle-down" aria-hidden="true"></span>
+                </a>
+            </h5>
+        </div>
+
+        <div id="collapseDim" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <ul>
+                    <li v-for="todo in todos">
+                        <label>
+                            <input type="checkbox"
+                                   v-on:change="toggle(todo)"
+                                   v-bind:checked="todo.done">
+                            <del v-if="todo.done">
+                                <small>{{ todo.text }}</small>
+                            </del>
+                            <span v-else>
+                                <small>{{ todo.text }}</small>
+                            </span>
+                        </label>
+
+                        <span class="glyphicon glyphicon-th-list small"></span>
+                        <span class="glyphicon glyphicon-filter small"></span>
+                        <span class="glyphicon glyphicon-sort-by-attributes-alt small"></span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <br>
+        <h5 class="app-font app-row-margin">
+            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFact" aria-expanded="true" aria-controls="collapseOne">
+                <span class="glyphicon glyphicon-info-sign"></span>指标<span class=" icon-double-angle-down" aria-hidden="true"></span>
+            </a>
+        </h5>
+        <div id="collapseFact" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+                <ol>
+                    <li v-for="fact in facts">
+                        <label>
+                            <input type="checkbox"
+                                   v-on:change="toggle(fact)"
+                                   v-bind:checked="fact.done">
+                            <del v-if="fact.done">
+                                <small>{{ fact.text }}</small>
+                            </del>
+                            <span v-else>
+                            <small>{{ fact.text }}</small>
+                        </span>
+                        </label>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <br>
+    </div>
+
+    <div class="col-md-9 app-right">
+        <br>
+        <div>
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">
+                    <small>行列</small>
+                </a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">
+                    <small>筛选器</small>
+                </a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
+                    <small>过滤器</small>
+                </a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">
+                    <small>排序</small>
+                </a></li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <br>
+                <div role="tabpanel" class="tab-pane active" id="home">
+
+                    <!--<div class="form-inline">-->
+                    <!--<label >维度</label>-->
+                    <!--<input type="text" class="form-control" placeholder="Text input" style="">-->
+                    <!--</div>-->
+                    <!--<div class="form-group">-->
+                    <!--<label >指标</label>-->
+                    <!--<input type="text" class="form-control" placeholder="Text input">-->
+                    <!--</div>-->
+
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-1 control-label">行</label>
+                            <div class="col-md-11">
+                                <input type="text" class="form-control" id="selectedDim" placeholder="维度">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-1 control-label">列</label>
+                            <div class="col-md-11">
+                                <input type="text" class="form-control" id="selectedFact" placeholder="指标">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                <div role="tabpanel" class="tab-pane" id="messages">Filter</div>
+                <div role="tabpanel" class="tab-pane" id="settings">Rank</div>
+            </div>
+            <br>
+        </div>
+
+        <div class="alert alert-danger alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Error Messagge</strong>
+        </div>
+        <div>
+            <h4 class="text-center">Add A Title...</h4>
+            <p class="pull-right smaller">add a description...</p>
+        </div>
+        <br>
+        <div>
+            <table class="table-striped" data-toggle="table" data-pagination="true" data-sorting="true">
+                <thead class="thead-dark">
+                <tr>
+                    <th>日期</th>
+                    <th>大区</th>
+                    <th>区域</th>
+                    <th>医院</th>
+                    <th>宠物</th>
+                    <th>客户</th>
+                    <th>现金</th>
+                    <th>POS</th>
+                    <th>会员卡充值</th>
+                    <th>会员卡消耗</th>
+                    <th>押金充值</th>
+                    <th>押金消耗</th>
+                    <th>账户充值</th>
+                    <th>账户消耗</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>2019-01-01</td>
+                    <td>东北大区</td>
+                    <td>黑龙江</td>
+                    <td>艾克威</td>
+                    <td>小黑</td>
+                    <td>sun</td>
+                    <td>129.50</td>
+                    <td>66.5</td>
+                    <td>12</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>2019-01-02</td>
+                    <td>东北大区</td>
+                    <td>黑龙江</td>
+                    <td>艾克威</td>
+                    <td>小黑</td>
+                    <td>sun</td>
+                    <td>129.50</td>
+                    <td>66.5</td>
+                    <td>12</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>2019-01-03</td>
+                    <td>东北大区</td>
+                    <td>黑龙江</td>
+                    <td>艾克威</td>
+                    <td>小黑</td>
+                    <td>sun</td>
+                    <td>129.50</td>
+                    <td>66.5</td>
+                    <td>12</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>2019-01-04</td>
+                    <td>东北大区</td>
+                    <td>黑龙江</td>
+                    <td>艾克威</td>
+                    <td>小黑</td>
+                    <td>sun</td>
+                    <td>129.50</td>
+                    <td>66.5</td>
+                    <td>12</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>2019-01-05</td>
+                    <td>东北大区</td>
+                    <td>黑龙江</td>
+                    <td>艾克威</td>
+                    <td>小黑</td>
+                    <td>sun</td>
+                    <td>129.50</td>
+                    <td>66.5</td>
+                    <td>12</td>
+                    <td></td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>100</td>
+                    <td>40</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <span class="icon-download-alt pull-right"></span>
+        <span class="icon-bar-chart pull-right"></span>
+        <br>
+    </div>
+</div>
+
+
+<!-- vue代码 ----------------------------------------------------------------------------------------------------------------------------------->
+<script>
+    $('document').ready(function () {
+        $('#factColumns').mouseenter(function () {
+            $('#factColumns').append('' +
+                '<span class="app-icon-size glyphicon glyphicon-list"></span>' +
+                '<span class="glyphicon glyphicon-filter app-icon-size"></span>' +
+                '<span class="glyphicon glyphicon-sort-by-attributes-alt app-icon-size"></span>' +
+                '');
+        }).mouseleave(function () {
+            $('span#factColumns').remove();
+        });
+
+        $("[data-toggle='popover']").popover();
+    });
+
+
+    var vm = new Vue({
+        el: "#app",
+        // 注册组件
+        // components: {
+        //     'app_header': appHeader,
+        //     'app_subject_choice': appSubjectChoice
+        // },
+        data: {
+            todos: [
+                {text: "Learn JavaScript", done: false},
+                {text: "Learn Vue", done: false},
+                {text: "Play around in JSFiddle", done: true},
+                {text: "Build something awesome", done: true}
+            ],
+            facts: [
+                {text: "全责发生制流水", done: false},
+                {text: "现金", done: false},
+                {text: "POS", done: false},
+                {text: "团购", done: true},
+                {text: "记账", done: true},
+                {text: "会员卡充值", done: true},
+                {text: "会员卡消费", done: true},
+                {text: "押金充值", done: true},
+                {text: "押金消费", done: true},
+                {text: "账户充值", done: true},
+                {text: "账户消费", done: true},
+            ],
+        },
+        methods: {
+            toggle: function (todo) {
+                todo.done = !todo.done
+            }
+        },
+    })
+</script>
+
+<!-- css代码 ----------------------------------------------------------------------------------------------------------------------------------->
+<style>
+    /*body {*/
+    /*!*background: #20262E;*!*/
+    /*!*padding: 20px;*!*/
+    /*font-family: Helvetica;*/
+    /*}*/
+
+    /*#app {*/
+    /*background: #fff;*/
+    /*border-radius: 4px;*/
+    /*padding: 20px;*/
+    /*transition: all 0.2s;*/
+    /*}*/
+
+    /*li {*/
+    /*margin: 1px 0;*/
+    /*}*/
+
+    h2 {
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    del {
+        color: rgba(0, 0, 0, 0.3);
+    }
+
+    tr {
+        font-size: 5px;
+    }
+
+</style>
+{% endblock %}

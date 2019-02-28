@@ -1,0 +1,43 @@
+.app-font {
+    font-family: "Courier New", Helvetica, Courier, Consolas, monospace;
+    /*5个默认基础字体：Serif,Sans-serif,Monospace,Cursive,Fantasy*/
+}
+
+.app-fontsize {
+    font-size: 13px;
+}
+
+.app-page-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /*margin-top: 20px;*/
+    border-bottom: 1px solid #eee;
+}
+
+.app-padding0 {
+    padding: 0 15px;
+}
+
+.app-row-padding {
+    padding: 0 20px;
+}
+
+.app-cube-padding {
+    padding: 0 20px;
+}
+
+.app-row-margin {
+    margin: 0 20px;
+}
+
+
+.app-left {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-right: 1px solid #eee;
+}
+
+.app-right {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--<html lang="zh-CN">-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!--web Site ico-->
+    <link href="../static/favicon.ico" rel="shortcut icon" type="image/x-icon">
+
+    <title>{% block title %}{% endblock %} - eGo</title>
+
+    <!-- Source js -->
+    <script src="../static/js/jquery.min.js"></script>
+    <script src="../static/js/vue.min.js"></script>
+    <script src="../static/js/axios.min.js"></script>
+    <script src="../static/lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="../static/js/typeahead.bundle.js"></script>
+    <!--<script src="../static/lib/bootstrap-3.3.7-dist/js/bootstrap-table.min.js"></script>-->
+    <!--<script src="../static/lib/bootstrap-3.3.7-dist/js/bootstrap-table-zh-CN.min.js"></script>-->
+    <script src="../static/lib/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="../static/lib/jsgrid-1.5.3/jsgrid.min.js"></script>
+
+
+    <!-- Source CSS-->
+    <link rel="stylesheet" href="../static/lib/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="../static/lib/bootstrap-3.3.7-dist/css/bootstrap-table.min.css">-->
+    <link rel="stylesheet" href="../static/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/lib/DataTables-1.10.18/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="../static/lib/jsgrid-1.5.3/jsgrid.min.css">
+    <link rel="stylesheet" href="../static/lib/jsgrid-1.5.3/jsgrid-theme.min.css">
+    <link rel="stylesheet" href="../static/css/app.css"/>
+
+
+    {% block js %}{% endblock %}
+    {% block css %}{% endblock %}
+
+</head>
+<body>
+
+{% block header %}{% endblock %}
+{% block content %}{% endblock %}
+
+</body>
+</html>

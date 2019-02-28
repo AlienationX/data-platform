@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+{% block js %}{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block header %}
+<div>
+    <nav class="navbar-collapse navbar-static-top navbar-inverse navbar-default" role="navigation">  <!--navbar-fixed-top-->
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="row">
+                <div class="nav navbar-header">
+                    <button type="button" class="navbar-toggle pull-right" data-toggle="collapse" data-target="#navWizard">
+                        <!--<span class="sr-only">切换导航</span>-->
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand text-danger" href="/">
+                        <div class="text-danger" style="width: 100px">
+                            <!--<img alt="Brand" src="../static/icon/brand.ico">-->
+                            <strong>eGo</strong></div>
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navWizard">
+                    <ul class="nav navbar-nav">
+                        <li id="analysis"><a href="/analysis">ANALYSIS</a></li>
+                        <li id="download"><a href="/download">DOWNLOAD</a></li>
+                        <li id="executing"><a href="#">EXECUTING</a></li>
+                        <li id="history"><a href="#">HISTORY</a></li>
+                        <li id="about"><a href="/about">ABOUT</a></li>
+                    </ul>
+
+                    <!--<div class="col-md-5"></div>-->
+                    <ul class="nav navbar-nav navbar-right" id="navProperty">
+                        {% if session.is_login %}
+                        <li><a href="#">[[ session.user_name ]]</a></li>
+                        <li><a href="/login"><span class="glyphicon glyphicon-log-out"></span></a></li>
+                        {% else %}
+                        <li><a href="/login">login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <!--</div>-->
+        </div><!-- /.navbar-collapse -->
+    </nav>
+</div>
+{% endblock %}
