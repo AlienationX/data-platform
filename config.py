@@ -29,7 +29,7 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:root@127.0.0.1:3306/olap?charset=utf8"
     # 其他数据库链接
     SQLALCHEMY_BINDS = {
-        # "impala": "impala://10.15.1.49:25003/default",  # 有很多元数据刷新和缓存的问题，不建议使用
+        # "impala": "impala://127.0.0.1:25003/default",  # 有很多元数据刷新和缓存的问题，不建议使用
         "kylin": "kylin://ADMIN:KYLIN@127.0.0.1:7070/learn_kylin?version=v1",
         "mysql": "mysql+pymysql://root:root123@127.0.0.1:3306/mysql?charset=utf8"
     }
