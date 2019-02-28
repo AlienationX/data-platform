@@ -3,7 +3,7 @@
 *.pyc
 
 # 配置文件
-config
+config.py
 
 # log文件
 log/
