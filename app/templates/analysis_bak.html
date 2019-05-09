@@ -12,89 +12,97 @@
 
 
 {% block content %}
-<!--<div class="container-fluid app-page-header">-->
-<!--<div class="row app-row-padding">-->
-<!--<div class="col-md-2">-->
-<!--<select class="selectpicker show-tick" data-header="Select a subject" style="height: 60px">-->
-<!--<optgroup label="Basic">-->
-<!--<option data-subtext="pay" class="small">金额分析</option>-->
-<!--<option data-subtext="sale" class="small">销售分析</option>-->
-<!--<option data-subtext="cus" class="small">宠物分析</option>-->
-<!--<option data-subtext="pet" class="small">客户分析</option>-->
-<!--<option data-subtext="case" class="small">病例分析</option>-->
-<!--</optgroup>-->
-<!--<optgroup label="Camping">-->
-<!--<option data-subtext="day" class="small">日维度分析</option>-->
-<!--<option data-subtext="week" class="small">周维度分析</option>-->
-<!--<option data-subtext="month" class="small">月维度分析</option>-->
-<!--</optgroup>-->
-<!--</select>-->
-<!--</div>-->
-<!--<button class="btn btn-default btn-sm pull-right" type="button" style="outline:none;"><i class="fa fa-folder-open text-primary pull-right" aria-hidden="true"></i></button>-->
-<!--&lt;!&ndash;<div class="pull-right"><span class="icon-edit"></span></div>&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->
+<div class="container-fluid app-page-header">
+    <div class="row app-row-padding">
+        <div class="col-md-2">
+            <select class="selectpicker show-tick" data-header="Select a subject" style="height: 60px">
+                <optgroup label="Basic">
+                    <option data-subtext="pay" class="small">金额分析</option>
+                    <option data-subtext="sale" class="small">销售分析</option>
+                    <option data-subtext="cus" class="small">宠物分析</option>
+                    <option data-subtext="pet" class="small">客户分析</option>
+                    <option data-subtext="case" class="small">病例分析</option>
+                </optgroup>
+                <optgroup label="Camping">
+                    <option data-subtext="day" class="small">日维度分析</option>
+                    <option data-subtext="week" class="small">周维度分析</option>
+                    <option data-subtext="month" class="small">月维度分析</option>
+                </optgroup>
+            </select>
+        </div>
+
+
+        <!--<div class="btn-group">-->
+        <!--<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--金额分析 <span class="caret"></span>-->
+        <!--</button>-->
+        <!--<ul class="dropdown-menu">-->
+        <!--<li><a href="#">-->
+        <!--<small>金额分析</small>-->
+        <!--</a></li>-->
+        <!--<li><a href="#">-->
+        <!--<small>销售分析</small>-->
+        <!--</a></li>-->
+        <!--<li><a href="#">-->
+        <!--<small>宠物分析</small>-->
+        <!--</a></li>-->
+        <!--<li><a href="#">-->
+        <!--<small>客户分析</small>-->
+        <!--</a></li>-->
+        <!--<li><a href="#">-->
+        <!--<small>病例分析</small>-->
+        <!--</a></li>-->
+        <!--<li role="separator" class="divider"></li>-->
+        <!--<li><a href="#">Separated link</a></li>-->
+        <!--</ul>-->
+        <!--</div>-->
+
+        <button class="btn btn-default btn-sm pull-right" type="button" style="outline:none;"><i class="fa fa-folder-open text-primary pull-right" aria-hidden="true"></i></button>
+        <!--<div class="pull-right"><span class="icon-edit"></span></div>-->
+    </div>
+</div>
 
 
 <div class="row app-padding0">
-    <div class="col-md-3 app-left" id="cube" style="background-color: #eee">
-        <div class="row">
-            <div class="col-md-2">
-                <select class="selectpicker show-tick" data-header="Select a subject" style="height: 60px">
-                    <optgroup label="Basic">
-                        <option data-subtext="pay">金额分析</option>
-                        <option data-subtext="sale">销售分析</option>
-                        <option data-subtext="cus">宠物分析</option>
-                        <option data-subtext="pet">客户分析</option>
-                        <option data-subtext="case">病例分析</option>
-                    </optgroup>
-                    <optgroup label="Camping">
-                        <option data-subtext="day" class="small">日维度分析</option>
-                        <option data-subtext="week" class="small">周维度分析</option>
-                        <option data-subtext="month" class="small">月维度分析</option>
-                    </optgroup>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div>
-                <ul>
-                    <li><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>维度
-                        <ul v-for="(dim_group,index) in dims" :key="'dim-group-'+index" class="list-group">{{ dim_group.table_desc }}
-                            <li v-for="(dim,index) in dim_group.columns" :key="'dim-'+index" class="list-group-item">
-                                <div v-on:click="toggle(dim)" style="cursor:pointer">
-                                    <input type="checkbox"
-                                           v-bind:checked="dim.done">
-                                    <del v-if="dim.done" class="small">
-                                        {{ dim.text }}
-                                    </del>
-                                    <span v-else class="small">
+    <div class="col-md-3 app-left" id="cube">
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item">维度
+                    <ul v-for="(dim_group,index) in dims" :key="'dim-group-'+index" class="list-group">{{ dim_group.table_desc }}
+                        <li v-for="(dim,index) in dim_group.columns" :key="'dim-'+index" class="list-group-item">
+                            <div v-on:click="toggle(dim)" style="cursor:pointer">
+                                <input type="checkbox"
+                                       v-bind:checked="dim.done">
+                                <del v-if="dim.done" class="small">
+                                    {{ dim.text }}
+                                </del>
+                                <span v-else class="small">
                                     {{ dim.text }}
                                 </span>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>指标
-                        <ul class="list-group">
-                            <li v-for="(fact,index) in facts" :key="'fact-'+index" class="list-group-item">
-                                <!--v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)"-->
-                                <div v-on:click="toggle(fact)" style="cursor:pointer">
-                                    <input type="checkbox"
-                                           v-bind:checked="fact.columns.done">
-                                    <del v-if="fact.done" class="small">
-                                        {{ fact.text }}
-                                    </del>
-                                    <span v-else class="small">
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list-group-item">指标
+                    <ol class="list-group">
+                        <li v-for="(fact,index) in facts" :key="'fact-'+index" class="list-group-item">
+                            <!--v-on:mouseover="changeActive($event)" v-on:mouseout="removeActive($event)"-->
+                            <div v-on:click="toggle(fact)" style="cursor:pointer">
+                                <input type="checkbox"
+                                       v-bind:checked="fact.columns.done">
+                                <del v-if="fact.done" class="small">
+                                    {{ fact.text }}
+                                </del>
+                                <span v-else class="small">
                                     {{ fact.text }}
                                 </span>
-                                </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+                            </div>
+                        </li>
+                    </ol>
+                </li>
+            </ul>
         </div>
+
 
         <br>
         <div class="row app-cube-padding">

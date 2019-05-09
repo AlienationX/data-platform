@@ -34,7 +34,7 @@ class Api(Resource):
             data["jsgrid_data"] = df.replace({np.nan: None}).to_dict("record")
             data["jsgrid_fields"] = [{"name": x, "width": "200px"} for x in data["columns"]]
             # data["countTotal"] = max(data.index)
-            time.sleep(1)
+            time.sleep(5)
             return data
         except Exception as e:
             err_msg = traceback.format_exc()

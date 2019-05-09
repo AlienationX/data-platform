@@ -43,9 +43,65 @@ class Api(Resource):
             data = {
                 "subjects": ["金额主题", "销售主题", "宠物主题", "客户主题", "病例主题"],
                 "subject": "销售主题",
-                "table_name": "fact_sale",
-                "dim": {"宠物": ["种类", "品种"], "客户": ["年龄段", "省份", "城市"], "产品": ["一级目录"], "日期": ["年", "季", "月", "日"]},
-                "fact": ["实付金额", "病例量", "消费新客", "消费老客"],
+                "dims": [
+                    {
+                        "table": "dim_date",
+                        "table_desc": "日期",
+                        "columns": [
+                            {"date": "日"},
+                            {"weeknum17": "周(1~7)"},
+                            {"weeknum54": "周(5~4)"},
+                            {"zyear_month": "月"},
+                            {"quarter": "季"},
+                            {"zyear": "年"},
+                        ]
+                    },
+                    {
+                        "table": "dim_clinic",
+                        "table_desc": "医院",
+                        "columns": [
+                            {"brand": "品牌"},
+                            {"region": "大区"},
+                            {"area": "区域"},
+                            {"province": "省份"},
+                            {"city": "城市"},
+                            {"system": "系统"},
+                            {"clinic_name": "医院名称"},
+                        ]
+                    },
+                    {
+                        "table": "dim_cus",
+                        "table_desc": "客户维度",
+                        "columns": [
+                            {"cus_gender": "性别"},
+                            {"cus_age_group": "年龄段"},
+                            {"cus_province": "省份"},
+                            {"cus_city": "城市"},
+                            {"cus_source": "客户来源"},
+                            {"cus_anonymous": "客户类型"},
+                            {"cus_status": "是否启用"},
+                        ]
+                    }
+                ],
+                "facts": [
+                    {
+                        "table": "fact_pay",
+                        "table_desc": "金额事实表",
+                        "columns": [
+                            {"accrual_basis": "全责发生制"},
+                            {"payed_by_caishe": "现金"},
+                            {"payed_by_card": "POS"},
+                            {"payed_by_group": "团购"},
+                            {"keep_account": "记账"},
+                            {"cus_anonymous": "会员卡充值"},
+                            {"cus_status": "会员卡消费"},
+                            {"cus_anonymous": "押金充值"},
+                            {"cus_status": "押金消费"},
+                            {"cus_anonymous": "账户充值"},
+                            {"cus_status": "账户消费"},
+                        ]
+                    }
+                ]
             }
             return data
         except Exception as e:
